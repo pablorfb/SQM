@@ -3,11 +3,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Conversation implements Runnable {
+	
+	final static ConcurrentLinkedQueue<Conversation> CONVERSATIONS = new ConcurrentLinkedQueue<>();
+	final static ConcurrentLinkedQueue<Conversation> USERS = new ConcurrentLinkedQueue<>();
+
 	PrintWriter out;
 	BufferedReader in;
-	Socket clientSocket;
+	Socket clientSocket;//port and ip are unique
 
 	public Conversation(Socket clientSocket) {
 		this.clientSocket = clientSocket;
@@ -34,7 +39,7 @@ public class Conversation implements Runnable {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally { //Close all connections
+		} finally { // Close all connections
 			out.close();
 			try {
 				in.close();
@@ -50,6 +55,17 @@ public class Conversation implements Runnable {
 		}
 
 		System.out.println("End of Conversation");
+
+		removeConversation(this);
+	}
+
+	// Lock handled by ConcurrentQueue
+	public static void removeConversation(Conversation conversation) {
+		CONVERSATIONS.remove();
+	}
+
+	public static int getNumberOfConversations() {
+		return CONVERSATIONS.size();
 	}
 
 }
