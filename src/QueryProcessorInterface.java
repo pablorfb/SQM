@@ -1,8 +1,12 @@
+import java.util.Set;
+
 
 public interface QueryProcessorInterface {
-	public String[] getUsersList();
+	public boolean isLoggedIn();
+	public boolean login(String username);
+	public Set<String> getUsersList();
 	boolean checkUsername(String username);
-	boolean sendMsg(String username, String message);
-	boolean sendMsgAll(String message);
-	void removeUser();
+	String sendMsg(String username, String message);
+	String sendMsgAll(String message);
+	boolean removeUser();
 }

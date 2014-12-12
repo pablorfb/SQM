@@ -1,25 +1,20 @@
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
 public class CommandInterpreter {
-	String state;
-	String username;
 	QueryProcessorInterface qp;
-	final static String AUTHORIZATION = "AUTHORIZATION";
-	final static String LOGGEDIN = "LOGGED IN";
-	Server server;
 	int msgSent;
 	
-	public CommandInterpreter (Server server) {
-		this.server=server;
-		//qp= new DatabaseInterface_Implement();
-		state = "AUTHORIZATION";
+	public CommandInterpreter (QueryProcessor queryProcessor ) {
+		qp= queryProcessor;
 		msgSent=0;
 	}
 	String response;
@@ -84,69 +79,70 @@ public class CommandInterpreter {
 	}
 
 	private String stat() {
-		String userList[]=qp.getUsersList();
-		String ans = "+OK there are "+userList.length+" users online, your status is "+state;
-		if (state.equals(LOGGEDIN))
+		Set<String> userList=qp.getUsersList();
+		String ans = "+OK there are "+userList.size()+" users online";
+		if (qp.isLoggedIn())
 			ans+=", "+msgSent+" messages sent";
 		ans+=".";
 		return ans;
 	}
 	
 	private String iden(String username) {
+		if (qp.isLoggedIn()) {
+			return "-BAD user alerady logged in";
+		
+		}
 		if (qp.checkUsername(username)){
-			this.username = username;
-			state = LOGGEDIN;
-			return "+OK welcome "+username;
+			if (qp.login(username))
+				return "+OK welcome "+username;
+			else return "-BAD cannot login";
 		} else {
 			return "-BAD unavailable username";
 		}
 	}
 	private String list() {
 		
-		if (state.equals(AUTHORIZATION)) {
+		if (!qp.isLoggedIn()) {
 			return "-BAD not logged in yet";
 		} else {
-			String[] userlist = qp.getUsersList();
-			String ans= "+OK there are "+userlist.length+" users logged in: ";
-			for (int i=0; i<userlist.length; i++) {
-				if (i==userlist.length-1) ans+=userlist[i]+".";
-				ans+=userlist[i]+", ";
+			Set<String> userlist = qp.getUsersList();
+			String ans= "+OK there are "+userlist.size()+" users logged in: ";
+			boolean startList = true;
+			for (String username : userlist) {
+				if (startList) {
+					ans+=username;
+					startList = false;
+				}
+				ans+=", "+username;
 			}
 			return ans;
 		}
 	}
 	private String mesg(String username, String msg) {
-		if (state.equals(AUTHORIZATION)) {
+		if (!qp.isLoggedIn()) {
 			return "-BAD not logged in yet";
 		} else {
-			if (qp.checkUsername(username)) 
-				return "-BAD user is not available";
-			else if (qp.sendMsg(username, msg)) {
-				return "+OK message sent to "+username;
-			} else {
-				return "-BAD message not sent";
- 			}
+			return qp.sendMsg(username, msg);
+			
 		}
 	}
 	
 	private String hail(String msg) {
-		if (state.equals(AUTHORIZATION)) {
+		if (!qp.isLoggedIn()) {
 			return "-BAD not logged in yet";
 		} else {
-			if (qp.sendMsgAll(msg)) {
-				return "+OK message sent";
-			} else {
-				return "-BAD message not sent";
- 			}
+			return qp.sendMsgAll(msg);
+			
 		}
 	}
 
 	private String quit() {
-		if (state.equals(AUTHORIZATION)) {
+		if (!qp.isLoggedIn()) {
 			return "-BAD not logged in yet";
 		} else {
-			qp.removeUser();
-			return "+OK user quit";
+			if (qp.removeUser())
+				return "+OK user quit";
+			else return "-BAD log out error";
 		}
 		
 	}
