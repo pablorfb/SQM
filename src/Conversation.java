@@ -8,6 +8,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 public class Conversation implements Runnable {
 
 	private static HashMap<String, Conversation> conversations = new HashMap<>();
@@ -22,9 +26,11 @@ public class Conversation implements Runnable {
 	private PrintWriter out;
 	private BufferedReader in;
 	private Socket clientSocket;
+	private CommandInterpreter commandInterpreter;
 
 	public Conversation(Socket clientSocket) {
 		this.clientSocket = clientSocket;
+		
 		try {
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
@@ -33,7 +39,8 @@ public class Conversation implements Runnable {
 			System.out.println("Couldn't initialize conversation");
 			e.printStackTrace();
 		}
-
+		
+		commandInterpreter = new CommandInterpreter(new QueryProcessor(this));
 	}
 
 	public boolean login(String username) {
@@ -110,11 +117,15 @@ public class Conversation implements Runnable {
 		out.println("echo: Welcome");
 		try {
 			while ((userInput = in.readLine()) != null) {
-				out.println(userInput.toUpperCase()); // Use Protocol Handler
-														// here
-				System.out.println("received: " + userInput);
+				out.println( commandInterpreter.handleInput(userInput));
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally { // Close all connections
 			close();
