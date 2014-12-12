@@ -52,17 +52,17 @@ public class CommandInterpreter {
 						response = "-BAD incorrect number of parameters";
 					}
 				
-				} if (segment[0].equals("IDEN")) {
+				} else if (segment[0].equals("IDEN")) {
 					if (segment.length==2) response = iden(parameters[0]);
 					else{
 						response = "-BAD incorrect number of parameters";
 					}
-				} if (segment[0].equals("MESG")) {
+				} else if (segment[0].equals("MESG")) {
 					if (segment.length==2) response = mesg(parameters[0], segment[1].split(" ",2)[1]);
 					else{
 						response = "-BAD incorrect number of parameters";
 					}
-				} if (segment[0].equals("HAIL")) {
+				} else if (segment[0].equals("HAIL")) {
 					if (segment.length==2) response = hail(segment[1]);
 					else{
 						response = "-BAD incorrect number of parameters";

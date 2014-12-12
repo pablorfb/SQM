@@ -13,8 +13,8 @@ public class Client {
 		// or run the Pop3Server_test.java to auto test with JUnit
 		
 		//get host and port
-		String hostName = args[0];
-		int portNumber = Integer.parseInt(args[1]);
+		String hostName = "localhost";
+		int portNumber = 9000;
 		
 		try (Socket clientSocket = new Socket(hostName, portNumber);
 				PrintWriter out = new PrintWriter(

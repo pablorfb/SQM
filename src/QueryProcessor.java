@@ -26,7 +26,8 @@ public class QueryProcessor implements QueryProcessorInterface {
 		//also check if username is existed
 		
 		Set<String> userlist = getUsersList();
-		if (!userlist.contains(username) && username.matches("/^[a-zA-Z0-9_-]{3,16}$/")) return true;
+		//boolean valid = username.matches("/^[a-zA-Z0-9_-]{3,16}$/");
+		if (!userlist.contains(username)) return true;
 		else return false;
 		//return username.matches("/^[a-zA-Z0-9_-]{3,16}$/");
 	}
