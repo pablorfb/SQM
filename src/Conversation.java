@@ -27,6 +27,8 @@ public class Conversation implements Runnable {
 	private BufferedReader in;
 	private Socket clientSocket;
 	private CommandInterpreter commandInterpreter;
+	
+	private boolean logout = false;
 
 	public Conversation(Socket clientSocket) {
 		this.clientSocket = clientSocket;
@@ -79,7 +81,7 @@ public class Conversation implements Runnable {
 		}
 		if (adressee == null)
 			return ADDRESSE_NOT_FOUND;
-		adressee.out.write(message);
+		adressee.out.println(message);
 		return MESSAGE_SENT;
 	}
 
@@ -90,7 +92,7 @@ public class Conversation implements Runnable {
 		}
 		for (Conversation addressee : addressees) {
 			if (addressee != this)
-				addressee.out.write(message);
+				addressee.out.println(message);
 		}
 		return MESSAGE_SENT;
 	}
@@ -109,6 +111,11 @@ public class Conversation implements Runnable {
 		
 		return false;
 	}
+	
+	public void setLogout(boolean logout){
+		this.logout=logout;
+		
+	}
 
 
 	public void run() {
@@ -118,6 +125,7 @@ public class Conversation implements Runnable {
 		try {
 			while ((userInput = in.readLine()) != null) {
 				out.println( commandInterpreter.handleInput(userInput));
+				if (logout) break;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -128,7 +136,7 @@ public class Conversation implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally { // Close all connections
-			close();
+			logout();
 		}
 
 		System.out.println("End of Conversation");

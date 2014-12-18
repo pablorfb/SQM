@@ -8,7 +8,15 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
-
+	private static PrintWriter out;
+	private static BufferedReader in;
+	private static BufferedReader stdIn;
+	
+	private static Thread threadClient;
+	private static Thread threadServer;
+	
+	static boolean quit = false;
+	static Socket clientSocket;
 	public static void main(String[] args) throws IOException {
 		//test connection to server by manually input
 		// or run the Pop3Server_test.java to auto test with JUnit
@@ -17,12 +25,15 @@ public class Client {
 		String hostName = "localhost";
 		int portNumber = 9000;
 		
-		try (Socket clientSocket = new Socket(hostName, portNumber);
-				PrintWriter out = new PrintWriter(
+		
+		
+		try {
+				clientSocket = new Socket(hostName, portNumber);
+				 out = new PrintWriter(
 						clientSocket.getOutputStream(), true);
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						clientSocket.getInputStream()));) {
-			final BufferedReader stdIn = new BufferedReader(new InputStreamReader(
+				 in = new BufferedReader(new InputStreamReader(
+						clientSocket.getInputStream()));
+				 stdIn = new BufferedReader(new InputStreamReader(
 					System.in));
 			
 			//String fromServer;
@@ -37,14 +48,19 @@ public class Client {
 				Runnable r1 = new Runnable() {
 					public void run() {
 						String fromServer="";
+						  
 						try {
-							while (true)
-								if ((fromServer = in.readLine()) != null) System.out.println("Server: " + fromServer);
-							
+							while (!quit) {
+								if ((fromServer = in.readLine()) != null) {
+									if (!fromServer.equals(""))
+										System.out.println("Server: " + fromServer);
+								}
+								if (fromServer.equals("+OK user quit")) quit();
+							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+						} 
 					}
 				};
 				
@@ -52,13 +68,26 @@ public class Client {
 				Runnable r2 = new Runnable() {
 					public void run() {
 						String fromUser="";
+						
 						try {
 							
 								//fromUser=stdIn.readLine();
-							while (true) {
-								if ((fromUser=stdIn.readLine()) != null){
+							//Thread;
+							while (!quit) {
+								
+								fromUser=stdIn.readLine();
+								if (fromUser != null){
 									System.out.print("Client: " + fromUser + "\n");
 									out.println(fromUser);
+								}
+								
+								if (fromUser.equals("quit")) {
+									try {
+										Thread.sleep(1000);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 								}
 							}
 							
@@ -69,8 +98,11 @@ public class Client {
 					}
 				};
 			
-				new Thread(r1).start();
-				new Thread(r2).start();
+				threadServer = new Thread(r1);
+				threadClient = new Thread(r2);
+				
+				threadServer.start();
+				threadClient.start();
 			
 				//System.out.print("yeah");
 				//System.out.print("Client: " + fromUser + "\n");
@@ -98,4 +130,17 @@ public class Client {
 		}
 	}
 
+	
+	private static void quit(){
+		quit = true;
+		try {
+			out.close();
+			in.close();
+			stdIn.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
 }

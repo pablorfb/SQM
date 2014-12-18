@@ -43,7 +43,7 @@ public class QueryProcessor implements QueryProcessorInterface {
 		
 		if (getUsersList().contains(username)) {
 		//check syntax
-		return conversation.sendMessage(username, message);
+		return conversation.sendMessage(username, "+MESG: "+message);
 		} else return "-BAD wrong username syntax";
 		//
 		
@@ -63,7 +63,10 @@ public class QueryProcessor implements QueryProcessorInterface {
 		//remove current user from the list of the thread
 		//then terminate the connection
 		// TODO Auto-generated method stub
-		return conversation.logout();
+		if (conversation.isLoggedIn()) {
+			conversation.setLogout(true);
+			return true;
+		} else return false;
 
 	}
 
