@@ -113,7 +113,7 @@ public class CommandInterpreter {
 					ans+=username;
 					startList = false;
 				}
-				ans+=", "+username;
+				else ans+=", "+username;
 			}
 			return ans;
 		}
