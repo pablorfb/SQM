@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -21,28 +22,58 @@ public class Client {
 						clientSocket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						clientSocket.getInputStream()));) {
-			BufferedReader stdIn = new BufferedReader(new InputStreamReader(
+			final BufferedReader stdIn = new BufferedReader(new InputStreamReader(
 					System.in));
-			String fromServer;
-			String fromUser = "";
+			
+			//String fromServer;
+			//String fromUser = "";
 
 			/*BufferedReader bufferedReader = new BufferedReader(new FileReader(
 					"test.txt"));
 			String line = null;
 			*/
-			while (true) {
-				while ((fromServer = in.readLine()) != null) {
-					if (!in.ready()) break;
-					System.out.println("Server: " + fromServer);
-					
-				}
+			//while (true) {
 				
-				if (fromUser != null) {
-					fromUser=stdIn.readLine();
-					System.out.print("Client: " + fromUser + "\n");
-					out.println(fromUser);
-				}
+				Runnable r1 = new Runnable() {
+					public void run() {
+						String fromServer="";
+						try {
+							while (true)
+								if ((fromServer = in.readLine()) != null) System.out.println("Server: " + fromServer);
+							
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				};
 				
+				
+				Runnable r2 = new Runnable() {
+					public void run() {
+						String fromUser="";
+						try {
+							
+								//fromUser=stdIn.readLine();
+							while (true) {
+								if ((fromUser=stdIn.readLine()) != null){
+									System.out.print("Client: " + fromUser + "\n");
+									out.println(fromUser);
+								}
+							}
+							
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				};
+			
+				new Thread(r1).start();
+				new Thread(r2).start();
+			
+				//System.out.print("yeah");
+				//System.out.print("Client: " + fromUser + "\n");
 				//if dont want to maually in put
 				//this part auto load from file and send to server
 				/*
@@ -54,7 +85,7 @@ public class Client {
 					out.println(fromUser);
 				}*/
 				
-			}
+			//}
 			
 
 		} catch (UnknownHostException e) {
