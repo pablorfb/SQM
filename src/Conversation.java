@@ -80,6 +80,7 @@ public class Conversation implements Runnable {
 		if (adressee == null)
 			return ADDRESSE_NOT_FOUND;
 		adressee.out.write(message);
+		System.out.println("Sent message to " + destination + " \"" + message + "\"");
 		return MESSAGE_SENT;
 	}
 

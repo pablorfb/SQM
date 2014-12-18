@@ -16,6 +16,7 @@ public class Client {
 		// get host and port
 		String hostName = "localhost";
 		int portNumber = 9000;
+		boolean connected = true;
 
 		try (Socket clientSocket = new Socket(hostName, portNumber);
 				PrintWriter out = new PrintWriter(
@@ -34,50 +35,40 @@ public class Client {
 			 */
 			// while (true) {
 
-			Runnable r1 = new Runnable() {
+			Thread listenServer = new Thread(new Runnable() {
 				public void run() {
 					String fromServer = "";
 					try {
 						while (true)
 							if ((fromServer = in.readLine()) != null) {
-								synchronized (System.class) {
-									System.out.println("Server: " + fromServer);
-								}
-
+									System.out.println("Server: " + fromServer);							
 							}
 
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-			};
+			});
 
-			Runnable r2 = new Runnable() {
+			Thread listenClient = new Thread(new Runnable() {
 				public void run() {
 					String fromUser = "";
 					try {
-
-						// fromUser=stdIn.readLine();
 						while (true) {
 							if ((fromUser = stdIn.readLine()) != null) {
-								synchronized (System.class) {
-									System.out.print("Client: " + fromUser
-											+ "\n");
-									out.println(fromUser);
-								}
+									out.println(fromUser);								
 							}
 						}
-
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-			};
+			});
 
-			new Thread(r1).start();
-			new Thread(r2).start();
+			listenServer.start();
+			listenClient.start();
+
+			listenServer.join();
 
 			// System.out.print("yeah");
 			// System.out.print("Client: " + fromUser + "\n");
@@ -100,6 +91,10 @@ public class Client {
 			System.err.println("Couldn't get I/O for the connection to "
 					+ hostName);
 			System.exit(1);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			System.out.println("exiting");
 		}
 	}
 
