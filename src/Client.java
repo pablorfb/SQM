@@ -1,7 +1,5 @@
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -81,7 +79,7 @@ public class Client {
 									out.println(fromUser);
 								}
 								
-								if (fromUser.equals("quit")) {
+								if (fromUser.toUpperCase().equals("QUIT")) {
 									try {
 										Thread.sleep(1000);
 									} catch (InterruptedException e) {
