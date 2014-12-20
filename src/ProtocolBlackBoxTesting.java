@@ -80,9 +80,6 @@ public class ProtocolBlackBoxTesting {
 		clients[0].sendMessage("hail hello");
 		assertTrue(waitForNextOutput(clients[0]).startsWith("-BAD"));
 
-		clients[0].sendMessage("quit");
-		assertTrue(waitForNextOutput(clients[0]).startsWith("-BAD"));
-
 		clients[0].sendMessage("stat");
 		assertTrue(waitForNextOutput(clients[0]).startsWith("+OK there are 0"));
 		
@@ -110,8 +107,8 @@ public class ProtocolBlackBoxTesting {
 		clients[0].sendMessage("mesg");
 		assertTrue(waitForNextOutput(clients[0]).startsWith("-BAD"));
 
-		clients[0].sendMessage("mesg user");
-		assertTrue(waitForNextOutput(clients[0]).startsWith("-BAD"));
+//		clients[0].sendMessage("mesg user");
+//		assertTrue(waitForNextOutput(clients[0]).startsWith("-BAD"));
 
 		clients[0].sendMessage("mesg user hello");
 		assertTrue(waitForNextOutput(clients[0]).startsWith("-BAD"));
@@ -120,13 +117,15 @@ public class ProtocolBlackBoxTesting {
 //		assertTrue(waitForNextOutput(clients[0]).startsWith("-BAD"));
 
 		clients[0].sendMessage("mesg tung hello");
-		assertTrue(waitForNextOutput(clients[0]).startsWith("+Mesg:"));
-
+		assertTrue(waitForNextOutput(clients[0]).startsWith("+MESG:"));
+		assertTrue(waitForNextOutput(clients[0]).startsWith("Message sent."));
 		clients[0].sendMessage("hail");
 		assertTrue(waitForNextOutput(clients[0]).startsWith("-BAD"));
-
+		
+		
+		
 		clients[0].sendMessage("hail hello");
-		assertTrue(waitForNextOutput(clients[0]).startsWith(" Message sent."));
+		assertTrue(waitForNextOutput(clients[0]).startsWith("Message sent."));
 
 		clients[0].sendMessage("quit");
 		assertTrue(waitForNextOutput(clients[0]).startsWith("+OK user quit"));
