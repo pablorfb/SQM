@@ -62,7 +62,6 @@ public class Client {
 		String hostName = "localhost";
 		int portNumber = 9000;
 		
-		quit();
 		
 		try {
 				clientSocket = new Socket(hostName, portNumber);
