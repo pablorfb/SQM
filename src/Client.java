@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class Client {
@@ -43,9 +44,13 @@ public class Client {
 	public void quit(){
 		quit = true;
 		try {
-			out.close();
-			in.close();
-			stdIn.close();
+			if (out!= null)
+				out.close();
+			if (in!= null)
+				in.close();
+			if (stdIn!= null)
+				stdIn.close();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,7 +62,7 @@ public class Client {
 		String hostName = "localhost";
 		int portNumber = 9000;
 		
-		
+		quit();
 		
 		try {
 				clientSocket = new Socket(hostName, portNumber);
@@ -89,12 +94,14 @@ public class Client {
 											testOutput = fromServer;
 										}
 									}
+									if (fromServer.equals("+OK user quit")) quit();
 								}
-								if (fromServer.equals("+OK user quit")) quit();
+								
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							quit();
 						} 
 					}
 				};
@@ -142,6 +149,7 @@ public class Client {
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							quit();
 						}
 					}
 				};
@@ -152,21 +160,6 @@ public class Client {
 				threadServer.start();
 				threadClient.start();
 			
-				//System.out.print("yeah");
-				//System.out.print("Client: " + fromUser + "\n");
-				//if dont want to maually in put
-				//this part auto load from file and send to server
-				/*
-				if ((line = bufferedReader.readLine()) != null) {
-					if (line.equals("")) continue;
-					fromUser = line.split("\t")[0];
-					System.out.print("Client: " + fromUser + "\n");
-					
-					out.println(fromUser);
-				}*/
-				
-			//}
-			
 
 		} catch (UnknownHostException e) {
 			System.err.println("Don't know about host " + hostName);
@@ -175,6 +168,7 @@ public class Client {
 			System.err.println("Couldn't get I/O for the connection to "
 					+ hostName);
 			System.exit(1);
+			
 		}
 	}
 	
