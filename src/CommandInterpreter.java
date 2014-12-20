@@ -60,14 +60,19 @@ public class CommandInterpreter {
 		
 		if (segment[0].equals("QUIT") || segment[0].equals("STAT") || segment[0].equals("LIST")) {
 			if (segment.length==1) return true;
-		} else if (segment[0].equals("IDEN") || segment[0].equals("MESG") || segment[0].equals("HAIL")) {
-			
-			if ( segment.length==2) {
-				if (!segment[0].equals("IDEN") || (segment[0].equals("IDEN") &&  checkUsernameSyntax(parameters[0])))
-				return true;
-			}
+		} else if (segment[0].equals("IDEN") || segment[0].equals("HAIL")) {
+			if (parameters!= null)
+				if (parameters.length == 1) {
+					if (segment[0].equals("IDEN")) {
+						if (checkUsernameSyntax(parameters[0])) 
+							return true;
+					} else return true;
+				}
+		} else if (segment[0].equals("MESG")) {
+			if (parameters!= null)
+				if (parameters.length == 2)
+					return true;
 		}
-		
 		return false;
 	}
 	
