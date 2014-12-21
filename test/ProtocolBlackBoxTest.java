@@ -1,7 +1,6 @@
-package test;
+
 import static org.junit.Assert.*;
 
-import clientside.Client;
 import serverside.Server;
 
 import org.junit.Test;
@@ -13,6 +12,8 @@ import java.net.UnknownHostException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import clientside.Client;
 
 public class ProtocolBlackBoxTest {
 
