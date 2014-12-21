@@ -50,6 +50,8 @@ public class Conversation implements Runnable {
 
 	public boolean login(String username) {
 		synchronized (conversations) {
+			if ( username == null )
+				return false;
 			if (conversations.get(username) == null) {
 				this.username = username;
 				conversations.put(username, this);
