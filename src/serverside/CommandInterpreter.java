@@ -1,6 +1,5 @@
 package serverside;
 
-
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -54,10 +53,6 @@ public class CommandInterpreter {
 		String[] parameters = null;
 		
 		if (segment.length>1) parameters= segment[1].split(" ");
-		if (input.length()>=segment[0].length()+2){
-			if (input.charAt(segment[0].length()+1)!=' ')
-				return true;
-		}
 		
 		if (segment[0].equals("QUIT") || segment[0].equals("STAT") || segment[0].equals("LIST")) {
 			if (segment.length==1) return true;
@@ -71,11 +66,15 @@ public class CommandInterpreter {
 				}
 		} else if (segment[0].equals("MESG")) {
 			if (parameters!= null)
-				if (parameters.length == 2)
+				if (parameters.length == 2) {
 					return true;
+				}
 		}
+	
 		return false;
 	}
+	
+	
 	
 	public boolean checkUsernameSyntax(String username){
 		//username.matches("^[a-zA-Z0-9_-]{3,16}$");
