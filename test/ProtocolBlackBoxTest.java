@@ -1,4 +1,8 @@
+package test;
 import static org.junit.Assert.*;
+
+import clientside.Client;
+import serverside.Server;
 
 import org.junit.Test;
 
@@ -10,7 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ProtocolBlackBoxTesting {
+public class ProtocolBlackBoxTest {
 
 	Client[] clients = new Client[100];
 
