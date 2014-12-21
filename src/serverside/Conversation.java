@@ -1,10 +1,10 @@
 package serverside;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
-
 
 public class Conversation implements Runnable {
 
@@ -24,19 +23,19 @@ public class Conversation implements Runnable {
 	public static final String USERNAME_NOT_FOUND = "Username not found.";
 	public static final String SUCCESFULLY_LOGGED_OUT = "Succesfully logged out.";
 	public static final String ALREADY_LOGGED_IN = "User already logged.";
-	
 
 	private PrintWriter out;
 	private BufferedReader in;
 	private Socket clientSocket;
 	private CommandInterpreter commandInterpreter;
 	private AtomicInteger messagesSent = new AtomicInteger(0);
-	
+	private String username;
+
 	private boolean logout = false;
 
 	public Conversation(Socket clientSocket) {
 		this.clientSocket = clientSocket;
-		
+
 		try {
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
@@ -45,13 +44,16 @@ public class Conversation implements Runnable {
 			System.out.println("Couldn't initialize conversation");
 			e.printStackTrace();
 		}
-		
+
 		commandInterpreter = new CommandInterpreter(new QueryProcessor(this));
 	}
 
 	public boolean login(String username) {
 		synchronized (conversations) {
+			if ( username == null )
+				return false;
 			if (conversations.get(username) == null) {
+				this.username = username;
 				conversations.put(username, this);
 				return true;
 			}
@@ -64,18 +66,14 @@ public class Conversation implements Runnable {
 			return conversations.keySet();
 		}
 	}
-	
-	public boolean isLoggedIn(){
-		Set<String> users = Conversation.getUsers();
+
+	public boolean isLoggedIn() {
 		synchronized (conversations) {
-			for (String user : users){
-				if (conversations.get(user) == this){
-					return true;
-				}
+			if (conversations.containsKey(username)) {
+				return true;
 			}
 		}
 		return false;
-				
 	}
 
 	public String sendMessage(String destination, String message) {
@@ -102,31 +100,27 @@ public class Conversation implements Runnable {
 		messagesSent.incrementAndGet();
 		return MESSAGE_SENT;
 	}
-	
-	public int getNumberOfMessages(){
+
+	public int getNumberOfMessages() {
 		return messagesSent.get();
 	}
-	
+
 	public boolean logout() {
-		Set<String> users = Conversation.getUsers();
 		synchronized (conversations) {
-			for (String user : users){
-				if (conversations.get(user) == this){
-					conversations.remove(user);
-					close();
-					return true;
-				}
+			if (conversations.containsKey(username)) {
+				conversations.remove(username);
+				close();
+				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	public void setLogout(boolean logout){
-		this.logout=logout;
-		
-	}
 
+	public void setLogout(boolean logout) {
+		this.logout = logout;
+
+	}
 
 	public void run() {
 		String userInput;
@@ -134,8 +128,9 @@ public class Conversation implements Runnable {
 		out.println("echo: Welcome");
 		try {
 			while ((userInput = in.readLine()) != null) {
-				out.println( commandInterpreter.handleInput(userInput));
-				if (logout) break;
+				out.println(commandInterpreter.handleInput(userInput));
+				if (logout)
+					break;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -152,7 +147,7 @@ public class Conversation implements Runnable {
 		System.out.println("End of Conversation");
 	}
 
-	private void close(){
+	private void close() {
 		out.close();
 		try {
 			in.close();
