@@ -16,7 +16,7 @@ public class QueryProcessor {
 		Set<String> userList=getUsersList();
 		String ans = "+OK there are "+userList.size()+" users online";
 		if (isLoggedIn())
-			ans+=", "+"..."+" messages sent";
+			ans+=", "+ conversation.getNumberOfMessages() +" messages sent";
 		ans+=".";
 		return ans;
 	}
