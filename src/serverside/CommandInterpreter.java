@@ -66,7 +66,7 @@ public class CommandInterpreter {
 				}
 		} else if (segment[0].equals("MESG")) {
 			if (parameters!= null)
-				if (parameters.length == 2) {
+				if (parameters.length > 1) {
 					return true;
 				}
 		}
