@@ -68,11 +68,8 @@ public class Conversation implements Runnable {
 	}
 
 	public boolean isLoggedIn() {
-		synchronized (conversations) {
-			if (conversations.containsKey(username)) {
+		if (username != null)
 				return true;
-			}
-		}
 		return false;
 	}
 
