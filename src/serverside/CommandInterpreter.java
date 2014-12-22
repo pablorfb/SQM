@@ -56,7 +56,7 @@ public class CommandInterpreter {
 		
 		if (segment[0].equals("QUIT") || segment[0].equals("STAT") || segment[0].equals("LIST")) {
 			if (segment.length==1) return true;
-		} else if (segment[0].equals("IDEN") || segment[0].equals("HAIL")) {
+		} else if (segment[0].equals("IDEN") ) {
 			if (parameters!= null)
 				if (parameters.length == 1) {
 					if (checkUsernameSyntax(parameters[0])) 
