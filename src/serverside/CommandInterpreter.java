@@ -59,12 +59,16 @@ public class CommandInterpreter {
 		} else if (segment[0].equals("IDEN") || segment[0].equals("HAIL")) {
 			if (parameters!= null)
 				if (parameters.length == 1) {
-					if (segment[0].equals("IDEN")) {
-						if (checkUsernameSyntax(parameters[0])) 
-							return true;
-					} else return true;
+					if (checkUsernameSyntax(parameters[0])) 
+						return true;
 				}
-		} else if (segment[0].equals("MESG")) {
+		} else if (segment[0].equals("HAIL")) {
+			if (parameters!= null)
+				if (parameters.length >= 1) {
+					return true;
+				}
+		}	else if (segment[0].equals("MESG")) {
+		
 			if (parameters!= null)
 				if (parameters.length > 1) {
 					return true;
