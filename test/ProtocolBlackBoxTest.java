@@ -12,7 +12,7 @@ import org.junit.Before;
 
 import clientside.Client;
 
-public class BlackTest {
+public class ProtocolBlackTest {
 
 	@Before
 	public void setUp() throws Exception {
