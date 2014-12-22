@@ -23,6 +23,8 @@ public class Conversation implements Runnable {
 	public static final String USERNAME_NOT_FOUND = "Username not found.";
 	public static final String SUCCESFULLY_LOGGED_OUT = "Succesfully logged out.";
 	public static final String ALREADY_LOGGED_IN = "User already logged.";
+	public static final String INVALID_STREAMS = "Streams not initialized.";
+
 
 	private PrintWriter out;
 	private BufferedReader in;
@@ -41,8 +43,7 @@ public class Conversation implements Runnable {
 			in = new BufferedReader(new InputStreamReader(
 					clientSocket.getInputStream()));
 		} catch (IOException e) {
-			System.out.println("Couldn't initialize conversation");
-			e.printStackTrace();
+			System.out.println("Couldn't initialize streams. ");
 		}
 
 		commandInterpreter = new CommandInterpreter(new QueryProcessor(this));
@@ -50,7 +51,7 @@ public class Conversation implements Runnable {
 
 	public boolean login(String username) {
 		synchronized (conversations) {
-			if ( username == null )
+			if (username == null || username == "" || this.username != null)
 				return false;
 			if (conversations.get(username) == null) {
 				this.username = username;
@@ -69,18 +70,20 @@ public class Conversation implements Runnable {
 
 	public boolean isLoggedIn() {
 		if (username != null)
-				return true;
+			return true;
 		return false;
 	}
 
 	public String sendMessage(String destination, String message) {
-		Conversation adressee;
+		Conversation addressee;
 		synchronized (conversations) {
-			adressee = conversations.get(destination);
+			addressee = conversations.get(destination);
 		}
-		if (adressee == null)
+		if (addressee == null )
 			return ADDRESSE_NOT_FOUND;
-		adressee.out.println(message);
+		if (addressee.out == null)
+			return INVALID_STREAMS;
+		addressee.out.println(message);
 		messagesSent.incrementAndGet();
 		return MESSAGE_SENT;
 	}
@@ -103,10 +106,11 @@ public class Conversation implements Runnable {
 	}
 
 	public boolean logout() {
-		synchronized (conversations) {
-			if (conversations.containsKey(username)) {
+		if (username != null) {
+			synchronized (conversations) {
 				conversations.remove(username);
 				close();
+				username = null;
 				return true;
 			}
 		}
@@ -121,7 +125,6 @@ public class Conversation implements Runnable {
 
 	public void run() {
 		String userInput;
-		System.out.println("echo: Initialized");
 		out.println("echo: Welcome");
 		try {
 			while ((userInput = in.readLine()) != null) {
@@ -145,16 +148,20 @@ public class Conversation implements Runnable {
 	}
 
 	private void close() {
-		out.close();
+
 		try {
-			in.close();
+			if (out != null)
+				out.close();
+			if (in != null)
+				in.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Couldn't close all streams");
 		} finally {
 			try {
-				clientSocket.close();
+				if (clientSocket != null)
+					clientSocket.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("Couldn't close all streams");
 			}
 		}
 	}
