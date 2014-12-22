@@ -56,6 +56,10 @@ public class Client {
 	
 	}
 	
+	public void forceExit(){
+		System.exit(1);
+	}
+	
 	public void startConnection(){
 		String hostName = "localhost";
 		int portNumber = 9000;
