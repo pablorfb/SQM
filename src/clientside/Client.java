@@ -29,16 +29,12 @@ public class Client {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		//test connection to server by manually input
-		// or run the Pop3Server_test.java to auto test with JUnit
 		Client c = new Client(false);
 		c.startConnection();
-		
-		//get host and port
 
 	}
 
-	
+	//close all stream
 	public void quit(){
 		quit = true;
 		try {
@@ -56,16 +52,20 @@ public class Client {
 	
 	}
 	
+	//force the client to exit
 	public void forceExit(){
 		System.exit(1);
 	}
 	
+	//main body of Client, handle connection, send message and get response
 	public void startConnection(){
+		//assume the host is run on the same machine, hence "localhost"
 		String hostName = "localhost";
 		int portNumber = 9000;
 		
 		
 		try {
+			//start connection and in, out stream
 				clientSocket = new Socket(hostName, portNumber);
 				 out = new PrintWriter(
 						clientSocket.getOutputStream(), true);
@@ -73,30 +73,24 @@ public class Client {
 						clientSocket.getInputStream()));
 				 stdIn = new BufferedReader(new InputStreamReader(
 					System.in));
-			//String fromServer;
-			//String fromUser = "";
-
-			/*BufferedReader bufferedReader = new BufferedReader(new FileReader(
-					"test.txt"));
-			String line = null;
-			*/
-			//while (true) {
 				
+				 //get message from server, put in a separate thread
 				Runnable r1 = new Runnable() {
 					public void run() {
 						String fromServer="";
 						  
 						try {
 							while (!quit) {
-								if ((fromServer = in.readLine()) != null) {
-									if (!fromServer.equals("")) {
-										System.out.println("Server: " + fromServer);
-										if (testing) {
-											testOutput = fromServer;
-										}
+								fromServer = in.readLine();
+								
+								if (!fromServer.equals("")) {
+									System.out.println("Server: " + fromServer);
+									if (testing) {
+										testOutput = fromServer;
 									}
-									if (fromServer.equals("+OK user quit")) quit();
 								}
+								if (fromServer.equals("+OK user quit")) quit();
+								
 								
 							}
 						} catch (IOException e) {
@@ -107,7 +101,7 @@ public class Client {
 					}
 				};
 				
-				
+				//send message to the server
 				Runnable r2 = new Runnable() {
 					public void run() {
 						String fromUser = null;
@@ -173,10 +167,12 @@ public class Client {
 		}
 	}
 	
+	//set input message, only for testing purpose
 	public void sendMessage(String input){
 		testInput = input;
 	}
 	
+	//get output message, only for testing purpose
 	public String getOutput() {
 		if (testOutput!=null) {
 			String output = testOutput;

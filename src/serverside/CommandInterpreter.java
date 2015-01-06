@@ -23,6 +23,7 @@ public class CommandInterpreter {
 		
 		if (generalSyntaxChecking(input)) {
 			
+			//if syntax is accepted, start perform the task
 				if (input.toUpperCase().startsWith("QUIT")) {
 					response = qp.quit();
 				} else if (input.toUpperCase().startsWith("STAT")) {
@@ -47,6 +48,7 @@ public class CommandInterpreter {
 		
 	}
 	
+	//checking syntax of general commands
 	public boolean generalSyntaxChecking(String input){
 		String[] segment = input.split(" ", 2);
 		segment[0]=segment[0].toUpperCase();
@@ -64,22 +66,21 @@ public class CommandInterpreter {
 				}
 		} else if (segment[0].equals("HAIL")) {
 			if (parameters!= null)
-				if (parameters.length >= 1) {
-					return true;
-				}
+				return true;
+				
 		}	else if (segment[0].equals("MESG")) {
 		
 			if (parameters!= null)
-				if (parameters.length > 1) {
-					return true;
-				}
+				if (parameters.length > 1) 
+					if (checkUsernameSyntax(parameters[0]))
+						return true;
+				
 		}
 	
 		return false;
 	}
 	
-	
-	
+	//checking syntax of username
 	public boolean checkUsernameSyntax(String username){
 		//username.matches("^[a-zA-Z0-9_-]{3,16}$");
 		return username.matches("^[a-zA-Z0-9_-]{3,16}$");

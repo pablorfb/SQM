@@ -94,7 +94,7 @@ public class Conversation implements Runnable {
 			addressees = conversations.values();
 		}
 		for (Conversation addressee : addressees) {
-			if (addressee != this)
+			if (addressee != this && addressee.out!=null)
 				addressee.out.println(message);
 		}
 		messagesSent.incrementAndGet();
