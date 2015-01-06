@@ -141,6 +141,9 @@ public class InterpreterQueryWhiteBoxTest {
 		c1.login("b");
 		assertTrue(qp1.quit().startsWith("+OK"));
 		
+		c1.logout();
+		c2.logout();
+		
 	}
 
 

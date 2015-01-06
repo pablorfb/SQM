@@ -91,6 +91,8 @@ public class ServerConversationBlackBoxTest {
 		assertTrue(c2.logout());
 		assertEquals(1, Conversation.getUsers().size());
 		
+		c1.logout();
+		
 
 	}
 

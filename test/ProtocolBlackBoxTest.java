@@ -265,6 +265,10 @@ public class ProtocolBlackBoxTest {
 		assertTrue(waitForNextOutput(c1).equals("Message sent."));
 		assertTrue(waitForNextOutput(c2).equals("+MESG: Hi everyone!!!"));
 		assertTrue(waitForNextOutput(c3).equals("+MESG: Hi everyone!!!"));
+		
+		c1.sendMessage("quit");
+		c2.sendMessage("quit");
+		c3.sendMessage("quit");
 		//assertTrue(waitForNextOutput(c1).equals("+OK there are 3 users online, 4 messages sent."));
 
 	}
