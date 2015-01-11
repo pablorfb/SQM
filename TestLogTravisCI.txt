@@ -1,0 +1,357 @@
+Using worker: worker-linux-8-1.bb.travis-ci.org:travis-linux-20
+
+travis_fold:start:system_info[0K[33;1mBuild system information[0m
+Build language: java
+[34m[1mBuild image provisioning date and time[0m
+Sun Dec  7 05:49:51 UTC 2014
+[34m[1mlsb_release -a[0m
+Distributor ID:	Ubuntu
+Description:	Ubuntu 12.04 LTS
+Release:	12.04
+Codename:	precise
+[34m[1mCookbooks Version[0m
+5736160 https://github.com/travis-ci/travis-cookbooks/tree/5736160
+[34m[1mGCC version[0m
+gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+Copyright (C) 2011 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+[34m[1mLLVM version[0m
+clang version 3.4 (tags/RELEASE_34/final)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+[34m[1mPre-installed Ruby versions[0m
+ruby-1.9.3-p551
+[34m[1mPre-installed Node.js versions[0m
+v0.10.33
+[34m[1mPre-installed Go versions[0m
+go1.3.3
+[34m[1mRedis version[0m
+redis-server 2.8.18
+[34m[1mriak version[0m
+1.4.12
+[34m[1mMongoDB version[0m
+MongoDB 2.4.12
+[34m[1mCouchDB version[0m
+couchdb 1.6.1
+[34m[1mNeo4j version[0m
+1.9.4
+[34m[1mCassandra version[0m
+2.0.9
+[34m[1mRabbitMQ Version[0m
+3.4.2
+[34m[1mElasticSearch version[0m
+1.4.0
+[34m[1mInstalled Sphinx versions[0m
+2.0.10
+2.1.9
+2.2.4
+[34m[1mDefault Sphinx version[0m
+2.1.9
+[34m[1mInstalled Firefox version[0m
+firefox 31.0esr
+[34m[1mPhantomJS version[0m
+1.9.8
+[34m[1mant -version[0m
+Apache Ant(TM) version 1.8.2 compiled on December 3 2011
+[34m[1mmvn -version[0m
+Apache Maven 3.2.3 (33f8c3e1027c3ddde99d3cdebad2656a31e8fdf4; 2014-08-11T20:58:10+00:00)
+Maven home: /usr/local/maven
+Java version: 1.7.0_72, vendor: Oracle Corporation
+Java home: /usr/lib/jvm/java-7-oracle/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "2.6.32-042stab090.5", arch: "amd64", family: "unix"
+[34m[1mgradle -version[0m
+
+------------------------------------------------------------
+Gradle 2.0
+------------------------------------------------------------
+
+Build time:   2014-07-01 07:45:34 UTC
+Build number: none
+Revision:     b6ead6fa452dfdadec484059191eb641d817226c
+
+Groovy:       2.3.3
+Ant:          Apache Ant(TM) version 1.9.3 compiled on December 23 2013
+JVM:          1.7.0_72 (Oracle Corporation 24.72-b04)
+OS:           Linux 2.6.32-042stab090.5 amd64
+
+[34m[1mlein1 version[0m
+Using JLine for console I/O; install rlwrap for optimum experience.
+Leiningen 1.7.1 on Java 1.7.0_72 Java HotSpot(TM) 64-Bit Server VM
+[34m[1mlein2 version[0m
+Leiningen 2.5.0 on Java 1.7.0_72 Java HotSpot(TM) 64-Bit Server VM
+[34m[1mlein version[0m
+Leiningen 2.5.0 on Java 1.7.0_72 Java HotSpot(TM) 64-Bit Server VM
+travis_fold:end:system_info[0K
+travis_fold:start:git.checkout[0Ktravis_time:start:0039c78c[0K$ git clone --depth=50 --branch=master git://github.com/pablorfb/SQM.git pablorfb/SQM
+Cloning into 'pablorfb/SQM'...
+remote: Counting objects: 269, done.[K
+remote: Compressing objects:   0% (1/115)   [Kremote: Compressing objects:   1% (2/115)   [Kremote: Compressing objects:   2% (3/115)   [Kremote: Compressing objects:   3% (4/115)   [Kremote: Compressing objects:   4% (5/115)   [Kremote: Compressing objects:   5% (6/115)   [Kremote: Compressing objects:   6% (7/115)   [Kremote: Compressing objects:   7% (9/115)   [Kremote: Compressing objects:   8% (10/115)   [Kremote: Compressing objects:   9% (11/115)   [Kremote: Compressing objects:  10% (12/115)   [Kremote: Compressing objects:  11% (13/115)   [Kremote: Compressing objects:  12% (14/115)   [Kremote: Compressing objects:  13% (15/115)   [Kremote: Compressing objects:  14% (17/115)   [Kremote: Compressing objects:  15% (18/115)   [Kremote: Compressing objects:  16% (19/115)   [Kremote: Compressing objects:  17% (20/115)   [Kremote: Compressing objects:  18% (21/115)   [Kremote: Compressing objects:  19% (22/115)   [Kremote: Compressing objects:  20% (23/115)   [Kremote: Compressing objects:  21% (25/115)   [Kremote: Compressing objects:  22% (26/115)   [Kremote: Compressing objects:  23% (27/115)   [Kremote: Compressing objects:  24% (28/115)   [Kremote: Compressing objects:  25% (29/115)   [Kremote: Compressing objects:  26% (30/115)   [Kremote: Compressing objects:  27% (32/115)   [Kremote: Compressing objects:  28% (33/115)   [Kremote: Compressing objects:  29% (34/115)   [Kremote: Compressing objects:  30% (35/115)   [Kremote: Compressing objects:  31% (36/115)   [Kremote: Compressing objects:  32% (37/115)   [Kremote: Compressing objects:  33% (38/115)   [Kremote: Compressing objects:  34% (40/115)   [Kremote: Compressing objects:  35% (41/115)   [Kremote: Compressing objects:  36% (42/115)   [Kremote: Compressing objects:  37% (43/115)   [Kremote: Compressing objects:  38% (44/115)   [Kremote: Compressing objects:  39% (45/115)   [Kremote: Compressing objects:  40% (46/115)   [Kremote: Compressing objects:  41% (48/115)   [Kremote: Compressing objects:  42% (49/115)   [Kremote: Compressing objects:  43% (50/115)   [Kremote: Compressing objects:  44% (51/115)   [Kremote: Compressing objects:  45% (52/115)   [Kremote: Compressing objects:  46% (53/115)   [Kremote: Compressing objects:  47% (55/115)   [Kremote: Compressing objects:  48% (56/115)   [Kremote: Compressing objects:  49% (57/115)   [Kremote: Compressing objects:  50% (58/115)   [Kremote: Compressing objects:  51% (59/115)   [Kremote: Compressing objects:  52% (60/115)   [Kremote: Compressing objects:  53% (61/115)   [Kremote: Compressing objects:  54% (63/115)   [Kremote: Compressing objects:  55% (64/115)   [Kremote: Compressing objects:  56% (65/115)   [Kremote: Compressing objects:  57% (66/115)   [Kremote: Compressing objects:  58% (67/115)   [Kremote: Compressing objects:  59% (68/115)   [Kremote: Compressing objects:  60% (69/115)   [Kremote: Compressing objects:  61% (71/115)   [Kremote: Compressing objects:  62% (72/115)   [Kremote: Compressing objects:  63% (73/115)   [Kremote: Compressing objects:  64% (74/115)   [Kremote: Compressing objects:  65% (75/115)   [Kremote: Compressing objects:  66% (76/115)   [Kremote: Compressing objects:  67% (78/115)   [Kremote: Compressing objects:  68% (79/115)   [Kremote: Compressing objects:  69% (80/115)   [Kremote: Compressing objects:  70% (81/115)   [Kremote: Compressing objects:  71% (82/115)   [Kremote: Compressing objects:  72% (83/115)   [Kremote: Compressing objects:  73% (84/115)   [Kremote: Compressing objects:  74% (86/115)   [Kremote: Compressing objects:  75% (87/115)   [Kremote: Compressing objects:  76% (88/115)   [Kremote: Compressing objects:  77% (89/115)   [Kremote: Compressing objects:  78% (90/115)   [Kremote: Compressing objects:  79% (91/115)   [Kremote: Compressing objects:  80% (92/115)   [Kremote: Compressing objects:  81% (94/115)   [Kremote: Compressing objects:  82% (95/115)   [Kremote: Compressing objects:  83% (96/115)   [Kremote: Compressing objects:  84% (97/115)   [Kremote: Compressing objects:  85% (98/115)   [Kremote: Compressing objects:  86% (99/115)   [Kremote: Compressing objects:  87% (101/115)   [Kremote: Compressing objects:  88% (102/115)   [Kremote: Compressing objects:  89% (103/115)   [Kremote: Compressing objects:  90% (104/115)   [Kremote: Compressing objects:  91% (105/115)   [Kremote: Compressing objects:  92% (106/115)   [Kremote: Compressing objects:  93% (107/115)   [Kremote: Compressing objects:  94% (109/115)   [Kremote: Compressing objects:  95% (110/115)   [Kremote: Compressing objects:  96% (111/115)   [Kremote: Compressing objects:  97% (112/115)   [Kremote: Compressing objects:  98% (113/115)   [Kremote: Compressing objects:  99% (114/115)   [Kremote: Compressing objects: 100% (115/115)   [Kremote: Compressing objects: 100% (115/115), done.[K
+Receiving objects:   0% (1/269)   Receiving objects:   1% (3/269)   Receiving objects:   2% (6/269)   Receiving objects:   3% (9/269)   Receiving objects:   4% (11/269)   Receiving objects:   5% (14/269)   Receiving objects:   6% (17/269)   Receiving objects:   7% (19/269)   Receiving objects:   8% (22/269)   Receiving objects:   9% (25/269)   Receiving objects:  10% (27/269)   Receiving objects:  11% (30/269)   Receiving objects:  12% (33/269)   Receiving objects:  13% (35/269)   Receiving objects:  14% (38/269)   Receiving objects:  15% (41/269)   Receiving objects:  16% (44/269)   Receiving objects:  17% (46/269)   Receiving objects:  18% (49/269)   Receiving objects:  19% (52/269)   Receiving objects:  20% (54/269)   Receiving objects:  21% (57/269)   Receiving objects:  22% (60/269)   Receiving objects:  23% (62/269)   Receiving objects:  24% (65/269)   Receiving objects:  25% (68/269)   Receiving objects:  26% (70/269)   Receiving objects:  27% (73/269)   Receiving objects:  28% (76/269)   Receiving objects:  29% (79/269)   Receiving objects:  30% (81/269)   Receiving objects:  31% (84/269)   Receiving objects:  32% (87/269)   Receiving objects:  33% (89/269)   Receiving objects:  34% (92/269)   Receiving objects:  35% (95/269)   Receiving objects:  36% (97/269)   Receiving objects:  37% (100/269)   Receiving objects:  38% (103/269)   Receiving objects:  39% (105/269)   Receiving objects:  40% (108/269)   Receiving objects:  41% (111/269)   Receiving objects:  42% (113/269)   Receiving objects:  43% (116/269)   Receiving objects:  44% (119/269)   Receiving objects:  45% (122/269)   Receiving objects:  46% (124/269)   Receiving objects:  47% (127/269)   Receiving objects:  48% (130/269)   Receiving objects:  49% (132/269)   Receiving objects:  50% (135/269)   Receiving objects:  51% (138/269)   Receiving objects:  52% (140/269)   Receiving objects:  53% (143/269)   Receiving objects:  54% (146/269)   Receiving objects:  55% (148/269)   Receiving objects:  56% (151/269)   Receiving objects:  57% (154/269)   Receiving objects:  58% (157/269)   Receiving objects:  59% (159/269)   Receiving objects:  60% (162/269)   Receiving objects:  61% (165/269)   Receiving objects:  62% (167/269)   Receiving objects:  63% (170/269)   Receiving objects:  64% (173/269)   Receiving objects:  65% (175/269)   Receiving objects:  66% (178/269)   Receiving objects:  67% (181/269)   Receiving objects:  68% (183/269)   Receiving objects:  69% (186/269)   Receiving objects:  70% (189/269)   Receiving objects:  71% (191/269)   Receiving objects:  72% (194/269)   Receiving objects:  73% (197/269)   remote: Total 269 (delta 152), reused 254 (delta 144)[K
+Receiving objects:  74% (200/269)   Receiving objects:  75% (202/269)   Receiving objects:  76% (205/269)   Receiving objects:  77% (208/269)   Receiving objects:  78% (210/269)   Receiving objects:  79% (213/269)   Receiving objects:  80% (216/269)   Receiving objects:  81% (218/269)   Receiving objects:  82% (221/269)   Receiving objects:  83% (224/269)   Receiving objects:  84% (226/269)   Receiving objects:  85% (229/269)   Receiving objects:  86% (232/269)   Receiving objects:  87% (235/269)   Receiving objects:  88% (237/269)   Receiving objects:  89% (240/269)   Receiving objects:  90% (243/269)   Receiving objects:  91% (245/269)   Receiving objects:  92% (248/269)   Receiving objects:  93% (251/269)   Receiving objects:  94% (253/269)   Receiving objects:  95% (256/269)   Receiving objects:  96% (259/269)   Receiving objects:  97% (261/269)   Receiving objects:  98% (264/269)   Receiving objects:  99% (267/269)   Receiving objects: 100% (269/269)   Receiving objects: 100% (269/269), 289.54 KiB | 0 bytes/s, done.
+Resolving deltas:   0% (0/152)   Resolving deltas:   1% (3/152)   Resolving deltas:   5% (8/152)   Resolving deltas:  17% (27/152)   Resolving deltas:  25% (39/152)   Resolving deltas:  30% (47/152)   Resolving deltas:  44% (68/152)   Resolving deltas:  48% (74/152)   Resolving deltas:  51% (78/152)   Resolving deltas:  61% (93/152)   Resolving deltas:  69% (105/152)   Resolving deltas:  75% (114/152)   Resolving deltas:  81% (124/152)   Resolving deltas:  82% (125/152)   Resolving deltas:  84% (128/152)   Resolving deltas:  88% (135/152)   Resolving deltas:  90% (138/152)   Resolving deltas:  93% (142/152)   Resolving deltas:  95% (145/152)   Resolving deltas:  96% (146/152)   Resolving deltas: 100% (152/152)   Resolving deltas: 100% (152/152), done.
+Checking connectivity... done.
+travis_time:end:0039c78c:start=1420759671668701041,finish=1420759671761065817,duration=92364776[0K$ cd pablorfb/SQM
+$ git checkout -qf 65a654f0dc42a3e804b779bf7fa1a535ed02a887
+travis_fold:end:git.checkout[0K$ jdk_switcher use oraclejdk7
+Switching to Oracle JDK7 (java-7-oracle), JAVA_HOME will be set to /usr/lib/jvm/java-7-oracle
+$ java -version
+java version "1.7.0_72"
+Java(TM) SE Runtime Environment (build 1.7.0_72-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 24.72-b04, mixed mode)
+$ javac -version
+javac 1.7.0_72
+travis_time:start:0e1b17a6[0K$ ant test
+Buildfile: /home/travis/build/pablorfb/SQM/build.xml
+
+compile:
+    [mkdir] Created dir: /home/travis/build/pablorfb/SQM/build/main
+    [javac] Compiling 5 source files to /home/travis/build/pablorfb/SQM/build/main
+
+build:
+    [mkdir] Created dir: /home/travis/build/pablorfb/SQM/build/test
+    [javac] Compiling 4 source files to /home/travis/build/pablorfb/SQM/build/test
+     [echo] Build done
+
+run:
+    [junit] Running ConversationWhiteBoxTest
+    [junit] Testsuite: ConversationWhiteBoxTest
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.069 sec
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.069 sec
+    [junit] 
+    [junit] ------------- Standard Output ---------------
+    [junit] Couldn't initialize streams. 
+    [junit] Couldn't initialize streams. 
+    [junit] Run @After
+    [junit] ------------- ---------------- ---------------
+    [junit] Running InterpreterQueryWhiteBoxTest
+    [junit] Testsuite: InterpreterQueryWhiteBoxTest
+    [junit] Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.009 sec
+    [junit] Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.009 sec
+    [junit] 
+    [junit] ------------- Standard Output ---------------
+    [junit] Couldn't initialize streams. 
+    [junit] Run @After
+    [junit] Couldn't initialize streams. 
+    [junit] Couldn't initialize streams. 
+    [junit] Run @After
+    [junit] ------------- ---------------- ---------------
+    [junit] ------------- Standard Error -----------------
+    [junit] java.net.BindException: Address already in use
+    [junit] 	at java.net.PlainSocketImpl.socketBind(Native Method)
+    [junit] 	at java.net.AbstractPlainSocketImpl.bind(AbstractPlainSocketImpl.java:376)
+    [junit] 	at java.net.ServerSocket.bind(ServerSocket.java:376)
+    [junit] 	at java.net.ServerSocket.<init>(ServerSocket.java:237)
+    [junit] 	at java.net.ServerSocket.<init>(ServerSocket.java:128)
+    [junit] 	at serverside.Server.main(Unknown Source)
+    [junit] 	at InterpreterQueryWhiteBoxTest$1.run(Unknown Source)
+    [junit] 	at java.lang.Thread.run(Thread.java:745)
+    [junit] java.net.BindException: Address already in use
+    [junit] 	at java.net.PlainSocketImpl.socketBind(Native Method)
+    [junit] 	at java.net.AbstractPlainSocketImpl.bind(AbstractPlainSocketImpl.java:376)
+    [junit] 	at java.net.ServerSocket.bind(ServerSocket.java:376)
+    [junit] 	at java.net.ServerSocket.<init>(ServerSocket.java:237)
+    [junit] ------------- ---------------- ---------------
+    [junit] Running ProtocolBlackBoxTest
+    [junit] Testsuite: ProtocolBlackBoxTest
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.288 sec
+    [junit] Tests run: 1, Failures: 0, Errors: 0, Time elapsed: 0.288 sec
+    [junit] 
+    [junit] ------------- Standard Output ---------------
+    [junit] ####NOT LOGGED IN TEST#####
+    [junit] Server: echo: Welcome
+    [junit] Client: 
+    [junit] Server: -BAD invalid input
+    [junit] Client: list
+    [junit] Server: -BAD not logged in yet
+    [junit] Client: mesg
+    [junit] Server: -BAD invalid input
+    [junit] Client: mesg user
+    [junit] Server: -BAD invalid input
+    [junit] Client: mesg user hello
+    [junit] Server: -BAD not logged in yet
+    [junit] Client: mesg tung
+    [junit] Server: -BAD invalid input
+    [junit] Client: mesg tung hello
+    [junit] Server: -BAD not logged in yet
+    [junit] Client: hail
+    [junit] Server: -BAD invalid input
+    [junit] Client: hail hello
+    [junit] Server: -BAD not logged in yet
+    [junit] Client: stat
+    [junit] Server: +OK there are 0 users online.
+    [junit] Client: quit
+    [junit] Server: -BAD not logged in yet
+    [junit] ####LOGGED IN TEST#####
+    [junit] End of Conversation
+    [junit] Server: echo: Welcome
+    [junit] Client: iden
+    [junit] Server: -BAD invalid input
+    [junit] Client: iden tung
+    [junit] Server: +OK welcome tung
+    [junit] Client: iden tung
+    [junit] Server: -BAD you are alerady logged in
+    [junit] Client: iden otherUsername
+    [junit] Server: -BAD you are alerady logged in
+    [junit] Client: stat
+    [junit] Server: +OK there are 1 users online, 0 messages sent.
+    [junit] Client: list
+    [junit] Server: +OK there are 1 users logged in: tung
+    [junit] Client: mesg
+    [junit] Server: -BAD invalid input
+    [junit] Client: mesg user
+    [junit] Server: -BAD invalid input
+    [junit] Client: mesg user hello
+    [junit] Server: -BAD user not existed
+    [junit] Client: mesg tung
+    [junit] Server: -BAD invalid input
+    [junit] Client: mesg tung hello
+    [junit] Server: +MESG: hello
+    [junit] Server: Message sent.
+    [junit] Client: hail
+    [junit] Server: -BAD invalid input
+    [junit] Client: hail hello
+    [junit] Server: Message sent.
+    [junit] Client: quit
+    [junit] Server: +OK user quit
+    [junit] ####CONVERSATION 2 TEST#####
+    [junit] End of Conversation
+    [junit] Server: echo: Welcome
+    [junit] Server: echo: Welcome
+    [junit] Client: iden tung
+    [junit] Server: +OK welcome tung
+    [junit] Client: stat
+    [junit] Server: +OK there are 1 users online, 0 messages sent.
+    [junit] Client: iden pablo
+    [junit] Server: +OK welcome pablo
+    [junit] Client: stat
+    [junit] Server: +OK there are 2 users online, 0 messages sent.
+    [junit] Client: stat
+    [junit] Server: +OK there are 2 users online, 0 messages sent.
+    [junit] Client: mesg Hey There!
+    [junit] Server: -BAD user not existed
+    [junit] Client: mesg pablo Hey There
+    [junit] Server: Message sent.
+    [junit] Server: +MESG: Hey There
+    [junit] Client: stat
+    [junit] Server: +OK there are 2 users online, 1 messages sent.
+    [junit] Client: mesg tung Hey There
+    [junit] Server: Message sent.
+    [junit] Server: +MESG: Hey There
+    [junit] Client: stat
+    [junit] Server: +OK there are 2 users online, 1 messages sent.
+    [junit] Client: quit
+    [junit] Server: +OK user quit
+    [junit] End of Conversation
+    [junit] Client: stat
+    [junit] Server: +OK there are 1 users online, 1 messages sent.
+    [junit] Client: quit
+    [junit] End of Conversation
+    [junit] Server: +OK user quit
+    [junit] ####CONVERSATION 3 TEST#####
+    [junit] Server: echo: Welcome
+    [junit] Server: echo: Welcome
+    [junit] Client: iden tung
+    [junit] Server: +OK welcome tung
+    [junit] Client: stat
+    [junit] Server: +OK there are 1 users online, 0 messages sent.
+    [junit] Client: iden pablo
+    [junit] Server: +OK welcome pablo
+    [junit] Client: stat
+    [junit] Server: +OK there are 2 users online, 0 messages sent.
+    [junit] Server: echo: Welcome
+    [junit] Client: iden tung
+    [junit] Server: -BAD this user already login, choose another name
+    [junit] Client: iden tom
+    [junit] Server: +OK welcome tom
+    [junit] Client: stat
+    [junit] Server: +OK there are 3 users online, 0 messages sent.
+    [junit] Client: mesg tom Hey There!
+    [junit] Server: Message sent.
+    [junit] Server: +MESG: Hey There!
+    [junit] Client: mesg tung Hey There!
+    [junit] Server: +MESG: Hey There!
+    [junit] Server: Message sent.
+    [junit] Client: mesg tom How are you?
+    [junit] Server: Message sent.
+    [junit] Server: +MESG: How are you?
+    [junit] Client: stat
+    [junit] Server: +OK there are 3 users online, 2 messages sent.
+    [junit] Client: mesg tom Hey There!
+    [junit] Server: Message sent.
+    [junit] Server: +MESG: Hey There!
+    [junit] Client: mesg pablo Hey There!
+    [junit] Server: +MESG: Hey There!
+    [junit] Server: Message sent.
+    [junit] Client: stat
+    [junit] Server: +OK there are 3 users online, 3 messages sent.
+    [junit] Client: HAIL Hi everyone!!!
+    [junit] Server: +MESG: Hi everyone!!!
+    [junit] Server: Message sent.
+    [junit] Server: +MESG: Hi everyone!!!
+    [junit] Client: quit
+    [junit] Run @After
+    [junit] Client: quit
+    [junit] ------------- ---------------- ---------------
+    [junit] ------------- Standard Error -----------------
+    [junit] java.net.BindException: Address already in use
+    [junit] 	at java.net.PlainSocketImpl.socketBind(Native Method)
+    [junit] 	at java.net.AbstractPlainSocketImpl.bind(AbstractPlainSocketImpl.java:376)
+    [junit] 	at java.net.ServerSocket.bind(ServerSocket.java:376)
+    [junit] 	at java.net.ServerSocket.<init>(ServerSocket.java:237)
+    [junit] 	at java.net.ServerSocket.<init>(ServerSocket.java:128)
+    [junit] 	at serverside.Server.main(Unknown Source)
+    [junit] 	at ProtocolBlackBoxTest$1.run(Unknown Source)
+    [junit] 	at java.lang.Thread.run(Thread.java:745)
+    [junit] java.net.SocketException: Socket closed
+    [junit] 	at java.net.SocketInputStream.socketRead0(Native Method)
+    [junit] 	at java.net.SocketInputStream.read(SocketInputStream.java:152)
+    [junit] 	at java.net.SocketInputStream.read(SocketInputStream.java:122)
+    [junit] 	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:283)
+    [junit] 	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:325)
+    [junit] 	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+    [junit] 	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+    [junit] 	at java.io.BufferedReader.fill(BufferedReader.java:154)
+    [junit] 	at java.io.BufferedReader.readLine(BufferedReader.java:317)
+    [junit] 	at java.io.BufferedReader.readLine(BufferedReader.java:382)
+    [junit] 	at clientside.Client$1.run(Unknown Source)
+    [junit] 	at java.lang.Thread.run(Thread.java:745)
+    [junit] ------------- ---------------- ---------------
+    [junit] Running ServerConversationBlackBoxTest
+    [junit] Testsuite: ServerConversationBlackBoxTest
+    [junit] Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.006 sec
+    [junit] Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.006 sec
+    [junit] 
+    [junit] ------------- Standard Output ---------------
+    [junit] Run @After
+    [junit] Couldn't initialize streams. 
+    [junit] Couldn't initialize streams. 
+    [junit] Run @After
+    [junit] ------------- ---------------- ---------------
+    [junit] ------------- Standard Error -----------------
+    [junit] java.net.BindException: Address already in use
+    [junit] 	at java.net.PlainSocketImpl.socketBind(Native Method)
+    [junit] 	at java.net.AbstractPlainSocketImpl.bind(AbstractPlainSocketImpl.java:376)
+    [junit] 	at java.net.ServerSocket.bind(ServerSocket.java:376)
+    [junit] 	at java.net.ServerSocket.<init>(ServerSocket.java:237)
+    [junit] 	at java.net.ServerSocket.<init>(ServerSocket.java:128)
+    [junit] 	at serverside.Server.main(Unknown Source)
+    [junit] 	at ServerConversationBlackBoxTest$1.run(Unknown Source)
+    [junit] 	at java.lang.Thread.run(Thread.java:745)
+    [junit] java.net.BindException: Address already in use
+    [junit] 	at java.net.PlainSocketImpl.socketBind(Native Method)
+    [junit] ------------- ---------------- ---------------
+
+clean:
+     [echo] clean done
+
+test:
+
+BUILD SUCCESSFUL
+Total time: 3 seconds
+travis_time:end:0e1b17a6:start=1420759672086231361,finish=1420759676302609513,duration=4216378152[0K
+[32;1mThe command "ant test" exited with 0.[0m
+
+Done. Your build exited with 0.
