@@ -12,7 +12,7 @@ public class QueryProcessor {
 	
 	}
 	
-	//get list if yser
+	//get list of user
 	public String stat() {
 		Set<String> userList=getUsersList();
 		String ans = "+OK there are "+userList.size()+" users online";

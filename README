@@ -1,2 +1,30 @@
 
 Chat server implemented in Java integrated with Travis for various sotrs of testing.
+
+Instructions on running the project in ECLIPSE IDE:
+    Open Eclipse.
+    Importing project:
+        File -> Import... -> "Existing Projects into Workspace"
+        Browse "root directory" to the project folder
+        Check "Copy projects into workspace" if needed
+        Click "Finish".
+    Run Server:
+        In the new project, Navigate to src -> serverside -> Server.java
+        Right click on Server.java and select "Run As" -> "Java Application"
+    Now we have a Server.
+    Run Client:
+        In the new project, Navigate to src -> clientside -> Client.java
+        Right click on Client.java and select "Run As" -> "Java Application"
+    Now we have a Client connect to the Server.
+    If more Client is needed, run Client.java again.
+    On the middle bottom, there will be a tab name "Console", this will be where user input command.
+    Choose this tab (unfortunately it can only display 1 View of 1 application at a moment)
+    Switch view between Clients:
+        Shortcut:
+            Windows: Ctrl + F7
+            MAC: Fn + F7
+            Press shortcut to move to the next one, release Ctrl or Fn to select the view
+     OR
+        Click on the small reverse triangle to the far right of this tab, next to the icon looks like a TV screen.
+
+            
