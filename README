@@ -1,7 +1,7 @@
 
 Chat server implemented in Java integrated with Travis for various sotrs of testing.
 
-Instructions on running the project in ECLIPSE IDE:
+a) Instructions on running the project in ECLIPSE IDE:
 
     - Open Eclipse.
     - Importing project:
@@ -28,4 +28,17 @@ Instructions on running the project in ECLIPSE IDE:
      OR
         + Click on the small reverse triangle to the far right of this tab, next to the icon looks like a TV screen.
     - Input anything you want.
-            
+    
+    
+    b) Running the project from Linux terminal:
+    
+    - Download and extract zip
+    - Open a terminal (Ctrl + t, in ubuntu)
+    - Navigate to project folder 
+    -Compile: ant compile
+    -Run server
+        +Navigate to build/main/serverside folder
+        +execute: java Server
+     -Run Client
+        +Navigate to build/main/clientside folder
+        +execute: java Client
