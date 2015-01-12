@@ -40,5 +40,7 @@ a) Instructions on running the project in ECLIPSE IDE:
         +Navigate to build/main/serverside folder
         +execute: java Server
      -Run Client
-        +Navigate to build/main/clientside folder
+        +Open another terminal (Ctrl + t, in ubuntu)
+        +Navigate to project's build/main/clientside folder
         +execute: java Client
+        +follow the same steps in case more clients are desired
